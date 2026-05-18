@@ -1,1 +1,49 @@
-<p>admin-orders works!</p>
+<nav class="navbar navbar-dark bg-dark px-4">
+  <a class="navbar-brand fw-bold" routerLink="/home">🛍️ eShop</a>
+  <div class="ms-auto">
+    <a routerLink="/home" class="btn btn-outline-light btn-sm">← Back</a>
+  </div>
+</nav>
+
+<div class="container py-4">
+  <h2 class="mb-4">🗂️ All Orders (Admin)</h2>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td class="fw-bold">{{ order.id }}</td>
+          <td>{{ order.userId }}</td>
+          <td>{{ order.date }}</td>
+          <td>
+            <span *ngFor="let item of order.items" class="d-block small">
+              {{ item.emoji }} {{ item.name }} × {{ item.qty }}
+            </span>
+          </td>
+          <td>{{ order.total | currency }}</td>
+          <td>
+            <select class="form-select form-select-sm"
+                    [value]="order.status"
+                    (change)="updateStatus(order.id, $event)">
+              <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

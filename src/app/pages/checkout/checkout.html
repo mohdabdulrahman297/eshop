@@ -1,1 +1,80 @@
-<p>checkout works!</p>
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark px-4">
+  <a class="navbar-brand fw-bold" routerLink="/home">🛍️ eShop</a>
+  <div class="ms-auto">
+    <a routerLink="/cart" class="btn btn-outline-light btn-sm">← Back to Cart</a>
+  </div>
+</nav>
+
+<!-- ORDER SUCCESS -->
+<div *ngIf="orderPlaced" class="container py-5 text-center" style="max-width: 500px;">
+  <div style="font-size: 5rem;">✅</div>
+  <h2 class="mt-3">Order Placed!</h2>
+  <p class="text-muted">Your order <strong>{{ orderId }}</strong> has been received.</p>
+  <a routerLink="/order-history" class="btn btn-primary mt-3 me-2">View Orders</a>
+  <a routerLink="/home" class="btn btn-outline-secondary mt-3">Continue Shopping</a>
+</div>
+
+<!-- CHECKOUT FORM -->
+<div *ngIf="!orderPlaced" class="container py-4">
+  <div class="row g-4" style="max-width: 900px; margin: auto;">
+
+    <!-- LEFT — Form -->
+    <div class="col-md-7">
+      <div class="card shadow-sm p-4">
+        <h4 class="mb-4">Shipping & Payment</h4>
+
+        <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+
+        <div class="mb-3">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" [(ngModel)]="name" placeholder="Jane Doe" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Street Address</label>
+          <input type="text" class="form-control" [(ngModel)]="address" placeholder="123 Main St" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">City</label>
+          <input type="text" class="form-control" [(ngModel)]="city" placeholder="Minneapolis" />
+        </div>
+
+        <hr />
+        <h6 class="mb-3">💳 Payment</h6>
+
+        <div class="mb-4">
+          <label class="form-label">Card Number</label>
+          <input type="text" class="form-control" [(ngModel)]="card"
+                 placeholder="1234 5678 9012 3456" maxlength="19" />
+        </div>
+
+        <button class="btn btn-primary w-100 btn-lg" (click)="placeOrder()">
+          Place Order · {{ total | currency }}
+        </button>
+      </div>
+    </div>
+
+    <!-- RIGHT — Order Summary -->
+    <div class="col-md-5">
+      <div class="card shadow-sm p-4">
+        <h5 class="mb-3">Order Summary</h5>
+
+        <div class="d-flex justify-content-between mb-2"
+             *ngFor="let item of items">
+          <span>{{ item.emoji }} {{ item.name }} × {{ item.qty }}</span>
+          <span>{{ item.price * item.qty | currency }}</span>
+        </div>
+
+        <hr />
+        <div class="d-flex justify-content-between fw-bold">
+          <span>Total</span>
+          <span>{{ total | currency }}</span>
+        </div>
+        <div class="text-success text-center mt-2 small">✅ Free shipping</div>
+      </div>
+    </div>
+
+  </div>
+</div>

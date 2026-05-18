@@ -1,1 +1,65 @@
-<p>product-detail works!</p>
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark px-4">
+  <a class="navbar-brand fw-bold" routerLink="/home">🛍️ eShop</a>
+  <div class="ms-auto d-flex gap-2">
+    <a routerLink="/cart" class="btn btn-outline-light btn-sm">🛒 Cart</a>
+    <a routerLink="/home" class="btn btn-outline-light btn-sm">← Back</a>
+  </div>
+</nav>
+
+<div class="container py-5" style="max-width: 700px;">
+
+  <div *ngIf="product" class="card shadow p-4">
+
+    <!-- Emoji Hero -->
+    <div class="text-center mb-4" style="font-size: 8rem; line-height: 1;">
+      {{ product.emoji }}
+    </div>
+
+    <!-- Category Badge -->
+    <div class="mb-2">
+      <span class="badge bg-secondary">{{ product.category }}</span>
+    </div>
+
+    <!-- Name & Price -->
+    <h2 class="mb-1">{{ product.name }}</h2>
+    <h4 class="text-primary mb-3">{{ product.price | currency }}</h4>
+
+    <!-- Description -->
+    <p class="text-muted mb-3">{{ product.desc }}</p>
+
+    <!-- Stock -->
+    <p class="mb-4">
+      <span class="fw-semibold">Availability:</span>
+      <span [class.text-success]="product.stock > 0"
+            [class.text-danger]="product.stock === 0">
+        {{ product.stock > 0 ? product.stock + ' in stock' : 'Out of stock' }}
+      </span>
+    </p>
+
+    <!-- Qty Selector -->
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <span class="fw-semibold">Quantity:</span>
+      <button class="btn btn-outline-secondary btn-sm" (click)="decreaseQty()">−</button>
+      <span class="fw-bold fs-5">{{ qty }}</span>
+      <button class="btn btn-outline-secondary btn-sm" (click)="increaseQty()">+</button>
+    </div>
+
+    <!-- Add to Cart Button -->
+    <button class="btn w-100 btn-lg"
+            [class.btn-success]="added"
+            [class.btn-primary]="!added"
+            [disabled]="product.stock === 0"
+            (click)="addToCart()">
+      {{ added ? '✓ Added to Cart!' : 'Add to Cart' }}
+    </button>
+
+    <!-- Go to Cart -->
+    <a *ngIf="added" routerLink="/cart"
+       class="btn btn-outline-primary w-100 mt-2">
+      Go to Cart →
+    </a>
+
+  </div>
+
+</div>

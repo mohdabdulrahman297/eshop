@@ -1,1 +1,57 @@
-<p>add-product works!</p>
+<nav class="navbar navbar-dark bg-dark px-4">
+  <a class="navbar-brand fw-bold" routerLink="/home">🛍️ eShop</a>
+  <div class="ms-auto">
+    <a routerLink="/home" class="btn btn-outline-light btn-sm">← Back</a>
+  </div>
+</nav>
+
+<div class="container py-4" style="max-width: 560px;">
+  <div class="card shadow-sm p-4">
+    <h4 class="mb-4">➕ Add New Product</h4>
+
+    <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+    <div *ngIf="success" class="alert alert-success">✅ Product added! Redirecting...</div>
+
+    <div class="mb-3">
+      <label class="form-label">Product Name</label>
+      <input type="text" class="form-control" [(ngModel)]="name" placeholder="e.g. Bluetooth Speaker" />
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col">
+        <label class="form-label">Price ($)</label>
+        <input type="number" class="form-control" [(ngModel)]="price" placeholder="29.99" />
+      </div>
+      <div class="col">
+        <label class="form-label">Stock</label>
+        <input type="number" class="form-control" [(ngModel)]="stock" placeholder="50" />
+      </div>
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col">
+        <label class="form-label">Category</label>
+        <select class="form-select" [(ngModel)]="category">
+          <option value="">Select...</option>
+          <option>Electronics</option>
+          <option>Sports</option>
+          <option>Books</option>
+          <option>Clothing</option>
+          <option>Home</option>
+        </select>
+      </div>
+      <div class="col">
+        <label class="form-label">Emoji</label>
+        <input type="text" class="form-control" [(ngModel)]="emoji" placeholder="🎸" maxlength="2" />
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label">Description</label>
+      <textarea class="form-control" [(ngModel)]="desc" rows="3"
+                placeholder="Short product description..."></textarea>
+    </div>
+
+    <button class="btn btn-primary w-100" (click)="onSubmit()">Add Product</button>
+  </div>
+</div>
